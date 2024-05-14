@@ -1,10 +1,10 @@
 {
   "include": [
-    "src/main.ts",
-    "src/data.ts",
-    "src/client/*.ts",
-    "src/types/**/*.ts",
-    "src/shared/**/*.ts"
+    "src-gui/main.ts",
+    "src-gui/data.ts",
+    "src-gui/client/*.ts",
+    "src-gui/types/**/*.ts",
+    "src-gui/shared/**/*.ts"
   ],
   "compilerOptions": {
     "composite": true,
