@@ -6,10 +6,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - revenge-of-the-farmers
   web:
     image: ghcr.io/jissepo/revenge-of-the-farmers-gui:main
     ports:
       - 8080:8080
+    networks:
+      - revenge-of-the-farmers
 #  api:
 #    image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
 #    ports:
@@ -20,3 +24,8 @@ services:
 #      MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
 #      MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
 #      MONGO_HOST: mongo
+#    networks:
+#      - revenge-of-the-farmers
+networks:
+  default:
+    name: revenge-of-the-farmers
