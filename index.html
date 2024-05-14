@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <title>Code kata 3 - Revenge of the farmer</title>
+</head>
+<body>
+<div id="app">
+  <section id="shop" class="shop shop--hidden">
+    <div class="shop__header">
+      <p class="shop__header-description">You can only buy a seed once per season.</p>
+    </div>
+    <div data-shop-shelve class="shop__shelve"></div>
+    <div data-shop-inventory class="shop__inventory"></div>
+  </section>
+  <aside class="hud hud--planting">
+    <div class="hud__left-container">
+      <button id="restartButton" class="square-button">
+        <img alt="restart button" src="icons/restart.svg">
+      </button>
+      <button id="closeShopButton" class="square-button">
+        <img alt="restart button" src="icons/back.svg">
+      </button>
+    </div>
+    <p class="hud__cardboard">
+      Cardboard: <span id="cardboardTracker">0</span>
+    </p>
+    <div class="hud__right-container">
+      <button id="openShopButton" class="square-button">
+        <img alt="shop button" src="icons/shop.svg">
+      </button>
+      <button id="startBattle" disabled class="square-button square-button--extra">
+        <img class="battle__disabled" alt="battle disabled button" src="icons/battleDisabled.png">
+        <img class="battle__ready" alt="battle ready button" src="icons/battleReady.png">
+      </button>
+    </div>
+  </aside>
+  <aside class="hud hud--battle">
+    <div class="hud__top-container">
+      <p data-participant-self-name class="participant__container">
+        Lorem
+      </p>
+      <div class="participants__health">
+        <progress data-battle-participant-self-health value="100" max="100"
+                  class="participant__health participant__health--self"></progress>
+        <p class="participants__vs">VS</p>
+        <progress data-battle-participant-opponent-health value="20" max="100"
+                  class="participant__health participant__health--opponent"></progress>
+      </div>
+      <p data-participant-opponent-name class="participant__container">
+        Ipsum
+      </p>
+    </div>
+    <div class="hud__bottom-container">
+      <div class="battle__stats">
+        <div data-battle-self-heart class="battle__stat battle__stat--heart">10</div>
+        <div data-battle-self-trophy class="battle__stat battle__stat--trophy">0</div>
+      </div>
+      <div class="battle__stats">
+        <div data-battle-opponent-trophy class="battle__stat battle__stat--trophy">0</div>
+        <div data-battle-opponent-heart class="battle__stat battle__stat--heart">10</div>
+      </div>
+    </div>
+    <div data-countdown-container class="hud__popup hud__countdown hud__countdown--hidden">
+      <span class="hud__countdown-text">3</span>
+      <span class="hud__countdown-text">2</span>
+      <span class="hud__countdown-text">1</span>
+      <span class="hud__countdown-text">GO</span>
+    </div>
+    <div data-battle-ended-container class="hud__popup battle-ended__container battle-ended__container--hidden">
+      <div class="battle-ended">
+        <span data-battle-ended-won class="battle-ended__text battle-ended__text--won">
+          You won!!<br />
+          You got <span data-battle-ended-slots> 0</span> plots
+        </span>
+        <span data-battle-ended-lost class="battle-ended__text battle-ended__text--lost">
+          Xd Big L, get REKT nerd
+          <br />
+          Losers don't get new slots LMAO
+        </span>
+        <button id="endBattle" class="battle-ended__button">KK!</button>
+      </div>
+    </div>
+  </aside>
+  <main class="game">
+    <!--    <div class="river"></div>-->
+    <div data-game-field-self class="game__field game__field--self">
+    </div>
+    <div data-game-field-opponent class="game__field game__field--opponent">
+    </div>
+    <div data-plant-picker class="plant-picker__container plant-picker__container--hidden"></div>
+    <div data-plant-sales-container class="plant-sales__container plant-sales__container--hidden">
+      <span data-plant-sales-price>0</span>
+      <button data-plant-sales-button class="plant-sales__button"></button>
+    </div>
+  </main>
+  <div id="splash" class="splash splash--displayed">
+    <div class="splash__content">
+      <button id="startButton" class="splash__button splash__button--start">Start</button>
+      <button id="continueButton" class="splash__button splash__button--continue splash__button--disabled">Continue
+      </button>
+    </div>
+  </div>
+</div>
+<template id="templates">
+  <div data-row class="game__field-row"></div>
+  <div data-cell data-cell-index="-1" class="cell">
+    <div data-cell-button-container class="cell__button-container">
+      <img data-cell-image class="cell__image" src="/cell.svg" alt="cell" />
+      <button data-cell-button class="cell__button"></button>
+      <span data-cell-timer class="cell__timer cell__timer--hidden">0:00</span>
+    </div>
+
+    <!--    <div data-plant-planted class="plant-planted__container">-->
+    <!--      <button data-plant-harvest class="square-button">-->
+    <!--        <img alt="harvest button" src="icons/shop.svg">-->
+    <!--      </button>-->
+    <!--    </div>-->
+  </div>
+  <div data-plant-picker-separator class="plant-picker__separator">
+  </div>
+  <button data-plant-icon-button class="plant__icon">
+    <img data-plant-icon-image class="plant__icon-image" alt="plant icon" />
+    <span data-plant-icon-quantity class="plant__icon-quantity">1</span>
+  </button>
+  <div data-shop-shelve-item class="shop__shelve-item">
+    <div class="item__description-container">
+      <button data-shop-shelve-item-description-button class="item__description-button"></button>
+      <div class="item__description">
+        <p data-shop-item-name class="item__name">Item</p>
+        <p data-shop-item-description class="item__description-text">Description</p>
+        <div data-shop-item-stats class="item__stats"></div>
+        <div data-shop-item-attributes class="item__attributes"></div>
+      </div>
+    </div>
+    <span class="item__price">
+      <img class="item__price-icon" alt="price icon" src="icons/price.svg" />
+      <span data-shop-item-price class="item__price-unit">0</span>
+    </span>
+    <button data-shop-shelve-item-buy-button class="item__buy-button">
+      Buy
+    </button>
+  </div>
+  <p data-shop-item-attribute class="item__attribute">Attribute</p>
+  <p data-shop-item-stat class="item__stat">Stat</p>
+  <p data-battle-damage class="battle__damage">0</p>
+</template>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

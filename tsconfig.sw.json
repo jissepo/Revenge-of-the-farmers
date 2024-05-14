@@ -1,0 +1,23 @@
+{
+  "include": [
+    "./src/types/**/*.ts",
+    "./src/worker/**/*.ts",
+    "./src/data.ts",
+    "./src/shared/**/*.ts"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "lib": [
+      "decorators",
+      "dom",
+      "es5",
+      "scripthost",
+      "webworker"
+    ],
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  }
+}
