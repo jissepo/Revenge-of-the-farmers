@@ -10,7 +10,8 @@ import {
   getGameFieldCellTemplate,
   getPlantIconTemplate,
   getPlantPickerElement,
-  getPlantPickerSeparatorTemplate, getPlantSalesElement,
+  getPlantPickerSeparatorTemplate,
+  getPlantSalesElement,
   getPlayerHealthIndicatorElement,
   getPlayerHeartsElement,
   getPlayerTrophyElement,
@@ -20,8 +21,9 @@ import {
   getShopItemStatElement,
   getShopItemTypeElement,
   getShopShelveElement,
-  getShopShelveItemElement, getSplashContinueElement,
-  getSplashElement, getSplashStartElement,
+  getShopShelveItemElement,
+  getSplashContinueElement,
+  getSplashElement,
   getStartBattleElement,
 } from './elements';
 import { handleCellClick, handlePlantPlant } from './cellHandler';
@@ -56,7 +58,7 @@ export const renderField = (gameGrid: GameGrid, isSelf: boolean): void => {
     const cellElement = cellTemplate.cloneNode(true) as HTMLDivElement;
 
     if ( cell.hasBeenUnlocked ) {
-    cellElement.classList.add('cell--unlocked');
+      cellElement.classList.add('cell--unlocked');
     }
 
     const cellButtonElement = cellElement.querySelector<HTMLButtonElement>('[data-cell-button]')!;
@@ -322,7 +324,7 @@ export const renderEnableContinueGameButton = (): void => {
   console.debug(`Enabling continue game button`);
   const continueElement = getSplashContinueElement();
   console.log(continueElement);
-  continueElement.classList.remove('splash__button--disabled')
+  continueElement.classList.remove('splash__button--disabled');
 };
 
 export const renderBattleReady = (isReady: boolean): void => {
@@ -374,11 +376,11 @@ export const renderCountdown = (): void => {
 export const renderHidePlantSalesElement = (): void => {
   const plantSalesElement = getPlantSalesElement();
   plantSalesElement.classList.add('plant-sales__container--hidden');
-}
+};
 export const renderHidePlantPickerElement = (): void => {
   const plantPickerElement = getPlantPickerElement();
   plantPickerElement.classList.add('plant-picker__container--hidden');
-}
+};
 export const renderDamageDealt = (data: DamageDealtMessage['value']): void => {
   const damageTemplate = getBattleDamageElement();
   const damageElement = damageTemplate.cloneNode(true) as HTMLDivElement;

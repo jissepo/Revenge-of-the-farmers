@@ -1,7 +1,6 @@
 import { GameGridCell } from './grid';
 import { Plant } from '../plant';
 import { SendableWorkerActions } from '../enums.ts';
-import { StartedGameState } from './gameState';
 
 export interface SendableWorkerMessage {
   action: SendableWorkerActions;

@@ -1,9 +1,12 @@
 import {
   getBattleEndedContainerElement,
   getCloseShopElement,
-  getEndBattleElement, getGameField,
-  getOpenShopElement, getPlantSalesButtonElement,
-  getRestartElement, getSplashContinueElement,
+  getEndBattleElement,
+  getGameField,
+  getOpenShopElement,
+  getPlantSalesButtonElement,
+  getRestartElement,
+  getSplashContinueElement,
   getSplashStartElement,
   getStartBattleElement,
 } from './elements';
@@ -18,7 +21,9 @@ import { sendMessageToWorker } from './sharedWorker';
 import {
   renderBattleReady,
   renderBuyableCells,
-  renderCloseShop, renderHidePlantPickerElement, renderHidePlantSalesElement,
+  renderCloseShop,
+  renderHidePlantPickerElement,
+  renderHidePlantSalesElement,
   renderOpenShop,
   renderShopShelve,
   renderSplashAnimate,
@@ -114,7 +119,7 @@ const addEndBattleListener = () => {
 };
 
 const addSellPlantListener = () => {
-const sellPlantButton = getPlantSalesButtonElement();
+  const sellPlantButton = getPlantSalesButtonElement();
   sellPlantButton.addEventListener('click', () => {
     const cellIndex = Number(sellPlantButton.parentElement!.dataset.cellIndex);
     if ( Number.isNaN(cellIndex) ) {
@@ -126,9 +131,9 @@ const sellPlantButton = getPlantSalesButtonElement();
       action: SendableWorkerActions.SELL_PLANT,
       value: { cellIndex },
     };
-    sendMessageToWorker(sellPlantMessage)
+    sendMessageToWorker(sellPlantMessage);
   });
-}
+};
 
 const addPopoversListener = () => {
   const gameField = getGameField(true);
@@ -138,7 +143,7 @@ const addPopoversListener = () => {
       renderHidePlantSalesElement();
     }
   });
-}
+};
 
 export const initializeHud = () => {
   addStartListener();

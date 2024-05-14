@@ -910,9 +910,11 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .plant-sales__container--hidden {
     display: none;
 }
+
 .plant-sales__button {
     background-image: url("icons/price.svg");
     background-size: contain;

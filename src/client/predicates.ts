@@ -1,12 +1,14 @@
 import {
   BattleEndedMessage,
   BattleReadyStatusMessage,
-  CellUnlockedMessage, ContinueableGameMessage,
+  CellUnlockedMessage,
+  ContinueableGameMessage,
   DamageDealtMessage,
   GameStartedMessage,
   OpponentFoundMessage,
   PlantBoughtMessage,
-  PlantPlantedMessage, PlantSoldMessage,
+  PlantPlantedMessage,
+  PlantSoldMessage,
   PlantStateChangedMessage,
 } from '../types/client/worker';
 import { GameStatus, ReceivedWorkerActions } from '../types/enums';
