@@ -62,7 +62,7 @@ jobs:
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
-          file: {context}/Gui.Dockerfile
+          file: Gui.Dockerfile
           push: true
           tags: ${{ steps.guiMeta.outputs.tags }}
           labels: ${{ steps.guiMeta.outputs.labels }}
