@@ -1,3 +1,4 @@
+// @ts-ignore
 import SharedWorkerScript from '../workers/sharedWorker?sharedworker';
 import { SendableWorkerMessage } from '../types/worker/worker';
 import { ReceivedWorkerMessage } from '../types/client/worker';

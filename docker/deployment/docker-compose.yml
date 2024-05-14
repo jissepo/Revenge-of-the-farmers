@@ -1,0 +1,22 @@
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  web:
+    image: ghcr.io/jissepo/revenge-of-the-farmers-gui:main
+    ports:
+      - 8080:8080
+#  api:
+#    image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
+#    ports:
+#      - 3000:3000
+#    depends_on:
+#      - mongo
+#    environment:
+#      MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+#      MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+#      MONGO_HOST: mongo
