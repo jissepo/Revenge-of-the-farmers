@@ -43,7 +43,7 @@ button {
 }
 
 body {
-    background-image: url("backgrounds/bg.png");
+    background-image: url("/backgrounds/bg.png");
     background-repeat: repeat;
     background-size: contain;
 }
@@ -65,7 +65,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("splash.svg");
+    background-image: url("/splash.svg");
     background-position: center;
     background-size: cover;
     display: none;
@@ -105,7 +105,7 @@ body {
     width: 11rem;
     aspect-ratio: 85 / 56;
 
-    background-image: url("backgrounds/endedButtonBg.svg");
+    background-image: url("/backgrounds/endedButtonBg.svg");
     background-size: contain;
     background-repeat: no-repeat;
 
@@ -157,7 +157,7 @@ body {
 }
 
 .hud__cardboard {
-    background-image: url("backgrounds/cardboardBg.svg");
+    background-image: url("/backgrounds/cardboardBg.svg");
     background-size: contain;
     background-repeat: no-repeat;
     padding: 1rem;
@@ -219,12 +219,12 @@ body {
 .square-button {
     width: 3rem;
     height: 3rem;
-    background-image: url("squareBtn.svg");
+    background-image: url("/squareBtn.svg");
     background-size: contain;
 }
 
 .square-button--extra:not(:disabled) {
-    background-image: url("battleSquare.svg");
+    background-image: url("/battleSquare.svg");
 }
 
 #startBattle:disabled .battle__ready {
@@ -241,7 +241,7 @@ body {
 }
 
 .river {
-    background-image: url("river.png");
+    background-image: url("/river.png");
     background-repeat: repeat;
     background-size: contain;
 }
@@ -443,7 +443,7 @@ body {
     border-radius: 50%;
     position: relative;
 
-    background-image: url("backgrounds/pickerBackground.svg");
+    background-image: url("/backgrounds/pickerBackground.svg");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -490,7 +490,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("backgrounds/shopBg.svg");
+    background-image: url("/backgrounds/shopBg.svg");
     z-index: 100;
     padding-top: 5rem;
     background-position-x: center;
@@ -524,7 +524,7 @@ body {
     gap: 1rem;
     justify-content: center;
 
-    background-image: url("backgrounds/shopInventoryBg.svg");
+    background-image: url("/backgrounds/shopInventoryBg.svg");
     background-position: center;
     background-repeat: no-repeat;
     margin-bottom: 1rem;
@@ -555,7 +555,7 @@ body {
 }
 
 .item__description-button {
-    background-image: url("icons/info.svg");
+    background-image: url("/icons/info.svg");
     width: 2rem;
     height: 2rem;
 }
@@ -611,7 +611,7 @@ body {
 }
 
 .item__buy-button {
-    background-image: url("rectangleButton.svg");
+    background-image: url("/rectangleButton.svg");
     background-size: contain;
     padding: 1rem;
     background-position: center;
@@ -682,11 +682,11 @@ body {
 }
 
 .battle__stat--trophy {
-    background-image: url("icons/trophy.svg");
+    background-image: url("/icons/trophy.svg");
 }
 
 .battle__stat--heart {
-    background-image: url("icons/heart.svg");
+    background-image: url("/icons/heart.svg");
 }
 
 .hud__top-container {
@@ -698,7 +698,7 @@ body {
 }
 
 .participant__container {
-    background-image: url("backgrounds/cardboardBg.svg");
+    background-image: url("/backgrounds/cardboardBg.svg");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -710,7 +710,7 @@ body {
 }
 
 .participants__vs {
-    background-image: url("backgrounds/vsBg.png");
+    background-image: url("/backgrounds/vsBg.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -725,7 +725,7 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 0 0.6rem;
-    background-image: url("backgrounds/battleProgressBg.png");
+    background-image: url("/backgrounds/battleProgressBg.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -818,7 +818,7 @@ body {
     width: 50vw;
     aspect-ratio: 64 / 44;
 
-    background-image: url("rectangleButton.svg");
+    background-image: url("/rectangleButton.svg");
     background-size: contain;
     background-repeat: no-repeat;
 
@@ -843,7 +843,7 @@ body {
     width: 7rem;
     aspect-ratio: 85 / 56;
 
-    background-image: url("backgrounds/endedButtonBg.svg");
+    background-image: url("/backgrounds/endedButtonBg.svg");
     background-size: contain;
     background-repeat: no-repeat;
 
@@ -906,7 +906,7 @@ body {
 
     transform: scale(var(--jj-game-field-scale));
 
-    background-image: url("rectangleButton.svg");
+    background-image: url("/rectangleButton.svg");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -916,7 +916,7 @@ body {
 }
 
 .plant-sales__button {
-    background-image: url("icons/price.svg");
+    background-image: url("/icons/price.svg");
     background-size: contain;
     background-repeat: no-repeat;
     width: 1.5rem;
