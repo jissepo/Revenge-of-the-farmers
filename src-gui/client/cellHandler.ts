@@ -35,7 +35,7 @@ export const handleCellClick = (event: MouseEvent) => {
     throw new Error('Could you not.. Please!');
   }
 
-  const cell: GameGridCell | undefined = state.grid.cells.get(index as unknown as number);
+  const cell: GameGridCell | undefined = state.grid.cells[index as unknown as number];
 
   if ( !cell ) {
     throw new Error('By now you are just toying with me. Pls don\'t!');
@@ -104,7 +104,7 @@ export const handlePlantPlant = (evt: MouseEvent, cellIndex: number, selectedPla
   if ( !isStartedGameState(state) ) {
     throw new Error('Game is not in active state. How did you even?');
   }
-  const cell = state.grid.cells.get(cellIndex);
+  const cell = state.grid.cells[cellIndex];
   if ( !cell ) {
     throw new Error('Cell not found');
   }

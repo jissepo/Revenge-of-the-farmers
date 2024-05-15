@@ -23,5 +23,5 @@ export type GameGridCell = UnPlantedGameGridCell | PlantedGameGridCell;
 
 export interface GameGrid {
   unlockableCellsCount: number;
-  cells: Map<number, GameGridCell>;
+  cells: Record<number, GameGridCell>;
 }

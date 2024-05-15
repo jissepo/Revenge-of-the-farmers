@@ -65,12 +65,12 @@ export const startBattle = async () => {
     addCellAttackInterval(cell, battleCellInterval, isSelf);
   };
   // Start battle intervals
-  localSelf.grid.cells.forEach((cell) => {
+  Object.values(localSelf.grid.cells).forEach((cell) => {
     if ( cell.hasPlant ) {
       cellHandler(cell, true);
     }
   });
-  opponent.grid.cells.forEach((cell) => {
+  Object.values(opponent.grid.cells).forEach((cell) => {
     if ( cell.hasPlant ) {
       cellHandler(cell, false);
     }
@@ -78,10 +78,10 @@ export const startBattle = async () => {
 };
 
 const clearAllIntervals = () => {
-  localSelf?.grid.cells.forEach((cell) => {
+  Object.values(localSelf?.grid.cells ?? {}).forEach((cell) => {
     removeCellAttackInterval(cell, true);
   });
-  opponent?.grid.cells.forEach((cell) => {
+  Object.values(opponent?.grid.cells ?? {}).forEach((cell) => {
     removeCellAttackInterval(cell, false);
   });
 };

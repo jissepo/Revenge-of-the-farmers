@@ -9,7 +9,7 @@ import {
 export const generateGameGrid = (width: number = GRID_MAX_WIDTH, height: number = GRID_MAX_HEIGHT): GameGrid => {
   const grid: GameGrid = {
     unlockableCellsCount: 0,
-    cells: new Map(),
+    cells: {},
   };
 
   const unlockedCellsIndices = [22, 29, 30, 31, 32, 33, 39, 40, 41];
@@ -33,23 +33,23 @@ export const generateGameGrid = (width: number = GRID_MAX_WIDTH, height: number 
       cell.hasBeenUnlocked = unlockedCellsIndices.includes(cellIndex);
       console.debug('Generated cell', cell);
 
-      grid.cells.set(cellIndex, cell);
+      grid.cells[cellIndex] = cell;
     }
   }
   return setUnlockableCells(grid);
 };
 
 export const setUnlockableCells = (grid: GameGrid): GameGrid => {
-  grid.cells.forEach((cell) => {
+  Object.values(grid.cells).forEach((cell) => {
     const cellIndex = calculateGridCellIndexForCell(cell);
     const modulo = cellIndex % GRID_MAX_WIDTH;
     const reductor = Math.abs(modulo - 2);
     console.log(cellIndex, reductor);
     const adjecentCells = [
-      grid.cells.get(cellIndex - ( 2 - cellIndex % 2 )),
-      grid.cells.get(cellIndex + ( 2 - cellIndex % 2 )),
-      grid.cells.get(calculateGridCellIndex(cell.x, cell.y - 1)),
-      grid.cells.get(calculateGridCellIndex(cell.x, cell.y + 1)),
+      grid.cells[(cellIndex - ( 2 - cellIndex % 2 ))],
+      grid.cells[(cellIndex + ( 2 - cellIndex % 2 ))],
+      grid.cells[(calculateGridCellIndex(cell.x, cell.y - 1))],
+      grid.cells[(calculateGridCellIndex(cell.x, cell.y + 1))],
     ];
     cell.canBeUnlocked = adjecentCells.some((cell) => cell && cell.hasBeenUnlocked);
   });

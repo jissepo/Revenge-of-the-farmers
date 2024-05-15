@@ -62,9 +62,9 @@ const handleGameTick = async () => {
     return;
   }
   const currentTime = new Date().getTime();
-  const newGrid = new Map<number, GameGridCell>();
+  const newGrid: Record<number, GameGridCell> = {};
   let hasAnyPlantChanged = false;
-  gameState.grid.cells.forEach((cell, index) => {
+  Object.values(gameState.grid.cells).forEach((cell, index) => {
     if ( cell.hasPlant ) {
       const plant = cell.plant;
       const growthDurationPassed = currentTime - plant.plantedAt;
@@ -87,7 +87,7 @@ const handleGameTick = async () => {
           ...cell,
           plant: newPlant,
         };
-        newGrid.set(index, plantedPlantCell);
+        newGrid[index] = plantedPlantCell;
         const plantStateChangedMessage: PlantStateChangedMessage = {
           action: ReceivedWorkerActions.PLANT_STATE_CHANGED,
           value: plantedPlantCell,
@@ -97,14 +97,14 @@ const handleGameTick = async () => {
         return;
       }
     }
-    newGrid.set(index, cell);
+    newGrid[index] = cell;
   });
 
   gameState.grid.cells = newGrid;
   await updateGameState(gameState);
 
   let allPlantsReady = true;
-  gameState.grid.cells.forEach((cell) => {
+  Object.values(gameState.grid.cells).forEach((cell) => {
     if ( cell.hasPlant && cell.plant.growthState !== PlantGrowthState.READY ) {
       allPlantsReady = false;
     }
@@ -175,7 +175,7 @@ const plantPlant = async (messageValue: PlantPlantMessage['value']): Promise<Pla
     throw new Error('Game is not started');
   }
   const cellIndex = calculateGridCellIndexForCell(messageValue.cell);
-  const cell = gameState.grid.cells.get(cellIndex);
+  const cell = gameState.grid.cells[cellIndex];
   if ( !cell ) {
     throw new Error('Invalid cell index');
   }
@@ -194,7 +194,7 @@ const plantPlant = async (messageValue: PlantPlantMessage['value']): Promise<Pla
     hasPlant: true,
     plant: plantedPlant,
   };
-  gameState.grid.cells.set(cellIndex, plantedCell);
+  gameState.grid.cells[cellIndex] = plantedCell;
 
   const plantIndex = gameState.player.availablePlants.findIndex((plant) => plant.name === messageValue.plant.name);
   if ( plantIndex === -1 ) {
@@ -257,20 +257,20 @@ const sellPlant = async (messageValue: SellPlantMessage['value']): Promise<Plant
   if ( !isStartedGameState(gameState) ) {
     throw new Error('Game is not started');
   }
-  const gridCell = gameState.grid.cells.get(messageValue.cellIndex);
+  const gridCell = gameState.grid.cells[messageValue.cellIndex];
   if ( !gridCell ) {
     throw new Error('Cell not found');
   }
   if ( !gridCell.hasPlant ) {
     throw new Error('Cell has no plant');
   }
-  gameState.grid.cells.set(messageValue.cellIndex, {
+  gameState.grid.cells[messageValue.cellIndex] = {
     hasPlant: false,
     canBeUnlocked: gridCell.canBeUnlocked,
     hasBeenUnlocked: gridCell.hasBeenUnlocked,
     x: gridCell.x,
     y: gridCell.y,
-  });
+  };
   gameState.player.cardboard += gridCell.plant.plant.stats.harvestValue;
 
   removeCellAttackInterval(gridCell, true);
@@ -290,10 +290,15 @@ const findOpponent = async (): Promise<OpponentFoundMessage> => {
   // TODO: Find opponent
   const self = gameState;
 
-  const res = await fetch(import.meta.env.VITE_API_URL + '/gamestate?round=' + gameState.battleStats.currentRound);
-  console.log(res.clone().json());
+  const findOpponentRes = await fetch(import.meta.env.VITE_API_URL + '/gamestate?round=' + gameState.battleStats.currentRound);
 
-  const opponent = gameState;
+  await fetch(import.meta.env.VITE_API_URL + '/gamestate', {
+    body: JSON.stringify(self),
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const opponent = ( await findOpponentRes.json() ).opponent ?? gameState;
 
   setOpponent(opponent);
   setLocalSelf(self);
@@ -319,14 +324,14 @@ export const unlockCell = async (value: UnlockCellMessage['value']): Promise<Cel
   }
 
   const cellIndex = calculateGridCellIndexForCell(value.cell);
-  const gridCell = gameState.grid.cells.get(cellIndex);
+  const gridCell = gameState.grid.cells[cellIndex];
 
-  if ( !gridCell )  {
+  if ( !gridCell ) {
     throw new Error('Cell not found');
   }
 
   gridCell.hasBeenUnlocked = true;
-  gameState.grid.cells.set(cellIndex, gridCell);
+  gameState.grid.cells[cellIndex] = gridCell;
   gameState.grid.unlockableCellsCount -= 1;
 
   gameState.grid = setUnlockableCells(gameState.grid);

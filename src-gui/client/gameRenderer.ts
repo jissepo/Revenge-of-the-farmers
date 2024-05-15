@@ -54,7 +54,7 @@ export const renderField = (gameGrid: GameGrid, isSelf: boolean): void => {
   console.debug('Rendering game field', gameGrid);
   const gameField = getGameField(isSelf);
   const cellTemplate = getGameFieldCellTemplate();
-  gameGrid.cells.forEach((cell) => {
+  Object.values(gameGrid.cells).forEach((cell) => {
     const cellElement = cellTemplate.cloneNode(true) as HTMLDivElement;
 
     if ( cell.hasBeenUnlocked ) {
@@ -439,7 +439,7 @@ export const renderBuyableCells = (gameState: StartedGameState): void => {
   if ( gameState.grid.unlockableCellsCount === 0 ) {
     return;
   }
-  gameState.grid.cells.forEach((cell) => {
+  Object.values(gameState.grid.cells).forEach((cell) => {
     if ( cell.hasBeenUnlocked || !cell.canBeUnlocked ) {
       return;
     }

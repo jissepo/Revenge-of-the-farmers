@@ -18,5 +18,5 @@ export const updateGridCell = (newCell: GameGridCell) => {
     throw new Error('Trying to update cell on game not running');
   }
   const cellIndex = calculateGridCellIndexForCell(newCell);
-  gameState.grid.cells.set(cellIndex, newCell);
+  gameState.grid.cells[cellIndex] = newCell;
 };
