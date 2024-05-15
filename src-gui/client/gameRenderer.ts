@@ -221,7 +221,7 @@ export const renderShopShelve = (): void => {
     throw new Error('Game is not in active state');
   }
 
-  for ( let i = 0; i < Math.max(2, gameState.battleStats.currentRound / 3 * 2); i++ ) {
+  for ( let i = 0; i < Math.max(2, Math.floor(Math.random() * gameState.battleStats.currentRound / 3 * 2)); i++ ) {
     shopPlants.push(
       data.plants[Math.floor(Math.random() * data.plants.length)],
     );
