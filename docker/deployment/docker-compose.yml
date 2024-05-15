@@ -12,8 +12,6 @@ services:
     image: ghcr.io/jissepo/revenge-of-the-farmers-gui:main
     ports:
       - 8080:8080
-    networks:
-      - revenge-of-the-farmers
 #  api:
 #    image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
 #    ports:
@@ -27,5 +25,5 @@ services:
 #    networks:
 #      - revenge-of-the-farmers
 networks:
-  default:
+  revenge-of-the-farmers:
     name: revenge-of-the-farmers
