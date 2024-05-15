@@ -33,7 +33,7 @@ import { Plant } from '../types/plant';
 import { handleBuyPlant } from './shopHandler';
 import { AvailablePlant, GamePlayer } from '../types/player';
 import data from '../data';
-import { isAvailablePlant } from './predicates';
+import { isAvailablePlant } from '../shared/predicates';
 import { StartedGameState } from '../types/worker/gameState';
 import { sendMessageToWorker } from './sharedWorker';
 import { StartBattleMessage } from '../types/worker/worker';

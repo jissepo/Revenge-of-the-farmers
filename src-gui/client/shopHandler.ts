@@ -1,5 +1,5 @@
 import { Plant } from '../types/plant';
-import { isStartedGameState, targetIsHTMLElement } from './predicates';
+import { isStartedGameState, targetIsHTMLElement } from '../shared/predicates';
 import { BuyPlantMessage } from '../types/worker/worker';
 import { SendableWorkerActions } from '../types/enums';
 import { sendMessageToWorker } from './sharedWorker';

@@ -5,7 +5,7 @@ import { sendMessageToWorker } from './sharedWorker';
 import { PlantPlantMessage, UnlockCellMessage } from '../types/worker/worker';
 import { SendableWorkerActions } from '../types/enums';
 import { getCurrentGameState } from './gameState';
-import { isStartedGameState, targetIsHTMLElement } from './predicates';
+import { isStartedGameState, targetIsHTMLElement } from '../shared/predicates';
 import { getPlantPickerElement, getPlantSalesElement } from './elements';
 
 export const handleCellClick = (event: MouseEvent) => {

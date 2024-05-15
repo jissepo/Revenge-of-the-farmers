@@ -1,7 +1,7 @@
 import { StartedGameState } from '../../types/worker/gameState';
 import { getGameState, updateGameState } from './helpers/gameState';
 import { GameGridCell, PlantedGameGridCell } from '../../types/worker/grid';
-import { isStartedGameState } from '../../client/predicates';
+import { isStartedGameState } from '../../shared/predicates';
 import { sendMessageToAllConnectedPorts } from './helpers/messenger';
 import { GameOutcome, ReceivedWorkerActions } from '../../types/enums';
 import { BattleEndedMessage, DamageDealtMessage } from '../../types/client/worker';
@@ -54,7 +54,10 @@ export const startBattle = async () => {
           return;
         }
         const otherPlayer = isSelf ? opponent : localSelf;
-        console.log('Interval', cell, isSelf, localSelf.player.health, otherPlayer.player.health);
+        if ( !otherPlayer ) {
+          throw new Error('Other player is not set');
+        }
+        console.log('Interval', cell, isSelf, localSelf?.player.health, otherPlayer.player.health);
         await handleDealDamage(cell, isSelf, otherPlayer);
       },
       cell.plant.plant.stats.speed,
@@ -75,10 +78,10 @@ export const startBattle = async () => {
 };
 
 const clearAllIntervals = () => {
-  localSelf.grid.cells.forEach((cell) => {
+  localSelf?.grid.cells.forEach((cell) => {
     removeCellAttackInterval(cell, true);
   });
-  opponent.grid.cells.forEach((cell) => {
+  opponent?.grid.cells.forEach((cell) => {
     removeCellAttackInterval(cell, false);
   });
 };
@@ -123,7 +126,7 @@ const handleDealDamage = async (cell: PlantedGameGridCell, isSelf: boolean, othe
     self.player.health = self.player.maxHealth;
     const cellsUnlocked = Math.max(
       1,
-      Math.floor(Math.random() * localSelf.battleStats.currentRound * 2),
+      Math.floor(Math.random() * ( localSelf?.battleStats.currentRound ?? 1 ) * 2),
     );
     self.battleStats.currentRound += 1;
     if ( isSelf ) {

@@ -1,12 +1,17 @@
 {
   "include": [
-    "./src-gui/types/**/*.ts",
-    "./src-gui/worker/**/*.ts",
     "./src-gui/data.ts",
-    "./src-gui/shared/**/*.ts"
+    "./src-gui/types/**/*.ts",
+    "./src-gui/shared/*.ts",
+    "./src-gui/worker/*.ts",
+    "./src-gui/workers/utils/*.ts",
+    "./src-gui/workers/utils/helpers/*.ts"
   ],
   "compilerOptions": {
     "composite": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
     "lib": [
       "decorators",
       "dom",

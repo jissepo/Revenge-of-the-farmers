@@ -30,7 +30,7 @@ import {
   renderSwitchHud,
 } from './gameRenderer';
 import { getCurrentGameState } from './gameState';
-import { isStartedGameState } from './predicates';
+import { isStartedGameState } from '../shared/predicates';
 
 const startGame = () => {
   const startGameMessage: StartGameMessage = {

@@ -3,7 +3,9 @@
     "src-gui/main.ts",
     "src-gui/data.ts",
     "src-gui/client/*.ts",
-    "src-gui/types/**/*.ts",
+    "src-gui/types/*.ts",
+    "src-gui/types/client/*.ts",
+    "src-gui/types/worker/*.ts",
     "src-gui/shared/**/*.ts"
   ],
   "compilerOptions": {

@@ -1,7 +1,7 @@
 import { GameState } from '../types/worker/gameState';
 import { getDefaultGameState } from '../shared/gameState';
 import { GameGridCell } from '../types/worker/grid';
-import { isStartedGameState } from './predicates';
+import { isStartedGameState } from '../shared/predicates';
 import { calculateGridCellIndexForCell } from '../shared/grid';
 
 let gameState: GameState = getDefaultGameState();

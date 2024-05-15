@@ -17,8 +17,8 @@ import { Plant } from '../types/plant';
 import { AvailablePlant } from '../types/player';
 
 
-export const isStartedGameState = (gameState: GameState): gameState is StartedGameState => {
-  return gameState.status === GameStatus.STARTED;
+export const isStartedGameState = (gameState: GameState|null): gameState is StartedGameState => {
+  return gameState?.status === GameStatus.STARTED;
 };
 export const targetIsHTMLElement = (target: EventTarget | null): target is HTMLElement => {
   return target instanceof HTMLElement;

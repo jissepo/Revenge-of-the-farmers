@@ -13,7 +13,7 @@ import {
   isPlantSoldMessageEvent,
   isPlantStateChangeMessageEvent,
   isStartedGameState,
-} from './client/predicates';
+} from './shared/predicates';
 import { HudState } from './types/enums';
 import {
   renderBattle,

@@ -8,7 +8,7 @@ import {
   sendMessageToAllConnectedPorts,
 } from './utils/helpers/messenger';
 import { getGameState } from './utils/helpers/gameState';
-import { isStartedGameState } from '../client/predicates';
+import { isStartedGameState } from '../shared/predicates';
 import { ContinueableGameMessage } from '../types/client/worker';
 
 

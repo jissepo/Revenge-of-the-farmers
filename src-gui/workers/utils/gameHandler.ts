@@ -30,7 +30,7 @@ import { GameGridCell, PlantedGameGridCell } from '../../types/worker/grid';
 import { sendMessageToAllConnectedPorts } from './helpers/messenger';
 import data from '../../data';
 import { calculateGridCellIndexForCell } from '../../shared/grid';
-import { isStartedGameState } from '../../client/predicates';
+import { isStartedGameState } from '../../shared/predicates';
 import { removeCellAttackInterval, setLocalSelf, setOpponent, startBattle } from './battleHandler';
 
 export const handleGameEvent = async (data: SendableWorkerMessage): Promise<ReceivedWorkerMessage | void> => {
@@ -289,6 +289,10 @@ const findOpponent = async (): Promise<OpponentFoundMessage> => {
 
   // TODO: Find opponent
   const self = gameState;
+
+  const res = await fetch(import.meta.env.VITE_API_URL + '/gamestate?round=' + gameState.battleStats.currentRound);
+  console.log(res.clone().json());
+
   const opponent = gameState;
 
   setOpponent(opponent);
@@ -316,6 +320,10 @@ export const unlockCell = async (value: UnlockCellMessage['value']): Promise<Cel
 
   const cellIndex = calculateGridCellIndexForCell(value.cell);
   const gridCell = gameState.grid.cells.get(cellIndex);
+
+  if ( !gridCell )  {
+    throw new Error('Cell not found');
+  }
 
   gridCell.hasBeenUnlocked = true;
   gameState.grid.cells.set(cellIndex, gridCell);
