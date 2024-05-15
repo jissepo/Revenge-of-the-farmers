@@ -6,6 +6,7 @@ import {
   getOpenShopElement,
   getPlantSalesButtonElement,
   getRestartElement,
+  getShopElement,
   getSplashContinueElement,
   getSplashStartElement,
   getStartBattleElement,
@@ -142,6 +143,14 @@ const addPopoversListener = () => {
       renderHidePlantPickerElement();
       renderHidePlantSalesElement();
     }
+  });
+  const shopElement = getShopElement();
+  shopElement.addEventListener('click', () => {
+    const descriptions = document.querySelectorAll('.item__description-container--expanded');
+    console.log(descriptions);
+    descriptions.forEach((description) => {
+      description.classList.remove('item__description-container--expanded');
+    })
   });
 };
 

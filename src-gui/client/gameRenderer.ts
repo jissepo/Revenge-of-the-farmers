@@ -240,6 +240,7 @@ export const renderShopShelve = (): void => {
     const itemInfoButtonElement = shelveItemElement.querySelector<HTMLButtonElement>('[data-shop-shelve-item-description-button]')!;
     itemInfoButtonElement.addEventListener('click', (evt) => {
       evt.preventDefault();
+      evt.stopPropagation();
       console.debug('Showing plant info', plant);
       itemInfoButtonElement.parentElement!.classList.toggle('item__description-container--expanded');
     });
@@ -323,7 +324,6 @@ export const renderSwitchHud = (newHud: HudState): void => {
 export const renderEnableContinueGameButton = (): void => {
   console.debug(`Enabling continue game button`);
   const continueElement = getSplashContinueElement();
-  console.log(continueElement);
   continueElement.classList.remove('splash__button--disabled');
 };
 
