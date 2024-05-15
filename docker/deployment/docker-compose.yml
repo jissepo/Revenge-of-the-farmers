@@ -1,6 +1,7 @@
 services:
 
   mongo:
+    container_name: revenge-of-the-farmers-mongo
     image: mongo
     restart: always
     environment:
@@ -12,18 +13,17 @@ services:
     image: ghcr.io/jissepo/revenge-of-the-farmers-gui:main
     ports:
       - 8080:8080
-#  api:
-#    image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
-#    ports:
-#      - 3000:3000
-#    depends_on:
-#      - mongo
-#    environment:
-#      MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-#      MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-#      MONGO_HOST: mongo
-#    networks:
-#      - revenge-of-the-farmers
+  api:
+    image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
+    command:
+      - node /app/main.cjs
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    environment:
+      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@revenge-of-the-farmers-mongo:27017/admin
+    networks:
+      - revenge-of-the-farmers
 networks:
   revenge-of-the-farmers:
-    name: revenge-of-the-farmers
