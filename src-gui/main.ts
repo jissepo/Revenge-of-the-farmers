@@ -25,14 +25,15 @@ import {
   renderCountdown,
   renderDamageDealt,
   renderEnableContinueGameButton,
-  renderField, renderHidePlantSalesElement,
+  renderField,
+  renderHidePlantSalesElement,
   renderPlantedGameGridCell,
   renderPlantPicker,
   renderShopInventory,
   renderShopShelve,
   renderSwitchHud,
 } from './client/gameRenderer';
-import { setGameState, updateGridCell } from './client/gameState';
+import { getCurrentGameState, setGameState, updateGridCell } from './client/gameState';
 import { initializeHud } from './client/hudHandler';
 
 initializeSharedWorker();
@@ -72,9 +73,18 @@ addWorkerMessageListener((event) => {
     renderShopInventory(event.data.value.player.availablePlants);
   } else if ( isPlantSoldMessageEvent(event) ) {
     console.debug('Plant sold');
+    const currBattleState = getCurrentGameState();
+    if ( !isStartedGameState(currBattleState) ) {
+      throw new Error('Game is not in active state');
+    }
     setGameState(event.data.value);
     renderCardboard(event.data.value.player.cardboard);
-    renderBattle(event.data.value, true);
+    renderBattle({
+      ...event.data.value, player: {
+        ...event.data.value.player,
+        health: currBattleState.player.health,
+      },
+    }, true);
   } else if ( isBattleReadyMessageEvent(event) ) {
     console.debug('Battle ready');
     renderBattleReady(event.data.value);
