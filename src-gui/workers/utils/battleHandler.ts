@@ -124,6 +124,10 @@ const handleDealDamage = async (cell: PlantedGameGridCell, isSelf: boolean, othe
       throw new Error('Game is not in active state');
     }
     self.player.health = self.player.maxHealth;
+    self.player.cardboard += Math.max(
+      5,
+      Math.floor(Math.random() * ( localSelf?.battleStats.currentRound ?? 1 ) * 5),
+    )
     const cellsUnlocked = Math.max(
       1,
       Math.floor(Math.random() * ( localSelf?.battleStats.currentRound ?? 1 ) * 2),

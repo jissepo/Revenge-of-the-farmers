@@ -33,11 +33,12 @@ import { Plant } from '../types/plant';
 import { handleBuyPlant } from './shopHandler';
 import { AvailablePlant, GamePlayer } from '../types/player';
 import data from '../data';
-import { isAvailablePlant } from '../shared/predicates';
+import { isAvailablePlant, isStartedGameState } from '../shared/predicates';
 import { StartedGameState } from '../types/worker/gameState';
 import { sendMessageToWorker } from './sharedWorker';
 import { StartBattleMessage } from '../types/worker/worker';
 import { DamageDealtMessage } from '../types/client/worker';
+import { getCurrentGameState } from './gameState';
 
 const clearField = (isSelf: boolean): void => {
   // Clear the game field
@@ -214,7 +215,13 @@ export const renderPlantPicker = (availablePlants: AvailablePlant[]): void => {
 export const renderShopShelve = (): void => {
   console.debug('Updating available plants render in shop');
   const shopPlants: Plant[] = [];
-  for ( let i = 0; i < 2; i++ ) {
+  const gameState = getCurrentGameState();
+
+  if ( !isStartedGameState(gameState) ) {
+    throw new Error('Game is not in active state');
+  }
+
+  for ( let i = 0; i < Math.max(2, gameState.battleStats.currentRound / 3 * 2); i++ ) {
     shopPlants.push(
       data.plants[Math.floor(Math.random() * data.plants.length)],
     );
