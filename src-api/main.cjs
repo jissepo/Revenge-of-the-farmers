@@ -41,14 +41,14 @@ app.post('/gamestate', (req, res) => {
 
 // GET endpoint to retrieve a random StartedGameState with the same currentRound
 app.get('/gamestate', (req, res) => {
-  console.log("Get gamestate");
+  console.log("Get gamestate round: ", req.query.round);
   const round = parseInt(req.query.round);
   db.collection('gamestates').aggregate([
     { $match: { 'battleStats.currentRound': round } },
-    { $sample: { size: 1 } },
   ]).toArray()
     .then((result) => {
-      res.send(result[0]);
+      const randomIndex = Math.floor(Math.random() * result.length);
+      res.send({opponent: result.length ? result[randomIndex] : null});
     })
     .catch((err) => {
       res.status(500).send({ error: 'An error has occurred' });
