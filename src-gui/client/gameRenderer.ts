@@ -419,7 +419,7 @@ export const renderBattleEnded = (outcome: GameOutcome, cellsUnlocked: number): 
 
     const battleEndedSlots = getBattleEndedSlotsElement();
     battleEndedSlots.textContent = cellsUnlocked.toString();
-    battleEndedContainer.classList.remove('battle-ended__container--lose');
+    battleEndedContainer.classList.remove('battle-ended__container--lost');
   } else {
     battleEndedContainer.classList.add('battle-ended__container--lost');
     battleEndedContainer.classList.remove('battle-ended__container--won');
