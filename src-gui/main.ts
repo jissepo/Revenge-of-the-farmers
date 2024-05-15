@@ -44,6 +44,7 @@ addWorkerMessageListener((event) => {
     renderSwitchHud(HudState.GAME);
     requestAnimationFrame(() => {
       renderField(event.data.value.grid, true);
+      renderBuyableCells(event.data.value);
       if ( isStartedGameState(event.data.value) ) {
         renderCardboard(event.data.value.player.cardboard);
         renderPlantPicker(event.data.value.player.availablePlants);
