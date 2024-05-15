@@ -783,9 +783,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-.hud__countdown {
     pointer-events: all;
 }
 

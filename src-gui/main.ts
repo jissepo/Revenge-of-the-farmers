@@ -25,7 +25,7 @@ import {
   renderCountdown,
   renderDamageDealt,
   renderEnableContinueGameButton,
-  renderField,
+  renderField, renderHidePlantSalesElement,
   renderPlantedGameGridCell,
   renderPlantPicker,
   renderShopInventory,
@@ -93,6 +93,7 @@ addWorkerMessageListener((event) => {
     setGameState(event.data.value.gameState);
     renderBattleEnded(event.data.value.outcome, event.data.value.cellsUnlocked);
     renderBattleStats(true, event.data.value.gameState);
+    renderHidePlantSalesElement();
   } else if ( isCellUnlockedMessageEvent(event) ) {
     console.debug('Battle ended');
     setGameState(event.data.value.gameState);
