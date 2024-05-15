@@ -1,9 +1,13 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
+const cors = require('cors'); // Import the cors package
+
+
 const app = express();
 dotenv.config({ path: __dirname + '/.env' });
 
+app.use(cors()); // Use cors as a middleware
 app.use(express.json());
 
 let db;
