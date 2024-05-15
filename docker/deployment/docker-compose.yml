@@ -16,7 +16,7 @@ services:
   api:
     image: ghcr.io/jissepo/revenge-of-the-farmers-api:main
     command:
-      - node /app/main.cjs
+      - /app/main.cjs
     ports:
       - 3000:3000
     depends_on:
