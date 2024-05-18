@@ -8,7 +8,7 @@ import {
 
 export const generateGameGrid = (width: number = GRID_MAX_WIDTH, height: number = GRID_MAX_HEIGHT): GameGrid => {
   const grid: GameGrid = {
-    unlockableCellsCount: 1000,
+    unlockableCellsCount: 0,
     cells: {},
   };
 
@@ -42,9 +42,7 @@ export const generateGameGrid = (width: number = GRID_MAX_WIDTH, height: number 
 export const setUnlockableCells = (grid: GameGrid): GameGrid => {
   Object.values(grid.cells).forEach((cell) => {
     const cellIndex = calculateGridCellIndexForCell(cell);
-    const modulo = cellIndex % GRID_MAX_WIDTH;
-    const reductor = Math.abs(modulo - 2);
-    console.log(cellIndex, reductor);
+
     const adjecentCells = [
       grid.cells[(cellIndex - ( 2 - cellIndex % 2 ))],
       grid.cells[(cellIndex + ( 2 - cellIndex % 2 ))],

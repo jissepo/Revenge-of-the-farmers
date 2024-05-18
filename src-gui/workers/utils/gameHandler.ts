@@ -300,8 +300,8 @@ const findOpponent = async (): Promise<OpponentFoundMessage> => {
 
   const opponent = ( await findOpponentRes.json() ).opponent ?? gameState;
 
-  // setOpponent(opponent);
-  setOpponent(self);
+  setOpponent(opponent);
+  // setOpponent(self);
   setLocalSelf(self);
 
   return {
