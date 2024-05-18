@@ -25,10 +25,10 @@ import {
   renderCloseShop,
   renderHidePlantPickerElement,
   renderHidePlantSalesElement,
-  renderOpenShop,
+  renderOpenShop, renderScaleField,
   renderShopShelve,
   renderSplashAnimate,
-  renderSwitchHud,
+  renderSwitchHud, renderVersion,
 } from './gameRenderer';
 import { getCurrentGameState } from './gameState';
 import { isStartedGameState } from '../shared/predicates';
@@ -43,6 +43,7 @@ const addStartListener = () => {
   const startGameButton = getSplashStartElement();
   startGameButton.addEventListener('click', () => {
     startGame();
+
     renderSwitchHud(HudState.GAME);
     renderSplashAnimate();
   });
@@ -154,7 +155,13 @@ const addPopoversListener = () => {
   });
 };
 
+const addWindowResizeListener = () => {
+  window.addEventListener('resize', () => {
+    renderScaleField();
+  });
+};
 export const initializeHud = () => {
+  addWindowResizeListener();
   addStartListener();
   addContinueListener();
   addRestartListener();
@@ -164,5 +171,6 @@ export const initializeHud = () => {
   addEndBattleListener();
   addSellPlantListener();
   addPopoversListener();
+  renderVersion();
 };
 

@@ -122,6 +122,14 @@ export const getCardboardTracker = (): HTMLSpanElement => {
   elementCache['cardboardTracker'] = element;
   return element;
 };
+export const getGameElement = (): HTMLDivElement => {
+  if ( elementCache['gameElement'] ) {
+    return elementCache['gameElement'] as HTMLDivElement;
+  }
+  const element = document.querySelector<HTMLDivElement>('.game')!;
+  elementCache['gameElement'] = element;
+  return element;
+};
 export const getGameField = (isSelf = true): HTMLDivElement => {
   const fieldCacheKey = isSelf ? 'gameFieldSelf' : 'gameFieldOpponent';
   if ( elementCache[fieldCacheKey] ) {
@@ -225,6 +233,14 @@ export const getPlantSalesButtonElement = (): HTMLButtonElement => {
   }
   const element = document.querySelector<HTMLButtonElement>('[data-plant-sales-button]')!;
   elementCache['getPlantSalesButtonElement'] = element;
+  return element;
+};
+export const getVersionElement = (): HTMLSpanElement => {
+  if ( elementCache['getVersionElement'] ) {
+    return elementCache['getVersionElement'] as HTMLSpanElement;
+  }
+  const element = document.querySelector<HTMLSpanElement>('[data-app-version]')!;
+  elementCache['getVersionElement'] = element;
   return element;
 };
 

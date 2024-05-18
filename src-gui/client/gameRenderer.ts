@@ -5,7 +5,7 @@ import {
   getBattleEndedContainerElement,
   getBattleEndedSlotsElement,
   getCardboardTracker,
-  getCountdownContainerElement,
+  getCountdownContainerElement, getGameElement,
   getGameField,
   getGameFieldCellTemplate,
   getPlantIconTemplate,
@@ -24,7 +24,7 @@ import {
   getShopShelveItemElement,
   getSplashContinueElement,
   getSplashElement,
-  getStartBattleElement,
+  getStartBattleElement, getVersionElement,
 } from './elements';
 import { handleCellClick, handlePlantPlant } from './cellHandler';
 import { GameOutcome, HudState, PlantGrowthState, SendableWorkerActions } from '../types/enums';
@@ -38,7 +38,9 @@ import { StartedGameState } from '../types/worker/gameState';
 import { sendMessageToWorker } from './sharedWorker';
 import { StartBattleMessage } from '../types/worker/worker';
 import { DamageDealtMessage } from '../types/client/worker';
-import { getCurrentGameState } from './gameState';
+import { getCurrentGameState, getCurrentHudState, setHudState } from './gameState';
+
+import {version} from '../../package.json';
 
 const clearField = (isSelf: boolean): void => {
   // Clear the game field
@@ -319,6 +321,7 @@ export const renderCloseShop = (): void => {
 
 export const renderSwitchHud = (newHud: HudState): void => {
   console.debug(`Switching hud to ${ newHud }`);
+  setHudState(newHud);
   const appElement = getAppElement();
   appElement.classList.forEach((className) => {
     if ( className.startsWith('app--hud-') ) {
@@ -326,7 +329,31 @@ export const renderSwitchHud = (newHud: HudState): void => {
     }
   });
   appElement.classList.add(`app--hud-${ newHud }`);
+  renderScaleField()
 };
+
+export const renderScaleField = (): void => {
+  const newHud = getCurrentHudState();
+  const gameElement = getGameElement();
+
+  const gameField = getGameField(true);
+  const fieldWidth = gameField.offsetWidth;
+
+  const windowWidth = window.innerWidth;
+  const padding = 32 * 2; // 32px on both sides
+
+  // Calculate the available width for the field
+  const availableWidth = windowWidth - padding;
+
+  // Calculate the scale
+  const scale = availableWidth / fieldWidth;
+
+  if ( newHud === HudState.GAME ) {
+    gameElement.style.setProperty('--jj-game-field-scale', scale.toString());
+  } else {
+    gameElement.style.setProperty('--jj-game-field-scale', (scale / 3).toString());
+  }
+}
 
 export const renderEnableContinueGameButton = (): void => {
   console.debug(`Enabling continue game button`);
@@ -459,3 +486,10 @@ export const renderBuyableCells = (gameState: StartedGameState): void => {
     cellButtonElement.disabled = !cell.canBeUnlocked;
   });
 };
+
+export const renderVersion = () => {
+  const versionElement = getVersionElement();
+  if ( versionElement ) {
+    versionElement.textContent = version || '0.0.0';
+  }
+}

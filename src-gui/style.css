@@ -67,7 +67,8 @@ body {
     height: 100%;
     background-image: url("/splash.svg");
     background-position: center;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     display: none;
 
     z-index: 1000;
@@ -97,10 +98,25 @@ body {
     }
 }
 
-.splash__button {
+.splash__content {
     position: absolute;
     bottom: 10%;
+    left: 50%;
     transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+
+
+    @media screen and (min-width: 400px) {
+        flex-direction: row;
+    }
+}
+
+
+.splash__button {
     padding: 1rem;
     width: 11rem;
     aspect-ratio: 85 / 56;
@@ -112,6 +128,10 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     color: #000;
+}
+
+.splash--animating .splash__button {
+    pointer-events: none;
 }
 
 .splash__button--start {
@@ -173,7 +193,8 @@ body {
     --jj-cell-rotation: -225deg;
     --jj-cell-width: 5.4rem;
     --jj-cell-height: 3.875rem;
-    --jj-game-field-scale: calc(1.5 * var(--jj-game-scale));
+    --jj-game-field-scale: 1.5;
+    --jj-game-field-calc-scale: calc(var(--jj-game-field-scale) * var(--jj-game-scale));
 
     padding-top: 8rem;
     overflow: hidden;
@@ -186,16 +207,15 @@ body {
     justify-content: center;
     align-items: center;
 
-    gap: calc(var(--jj-game-field-scale) * var(--jj-game-field-scale) * 10rem);
+    gap: 1rem;
 }
 
 .app--hud-battle .game {
     justify-content: center;
-    --jj-game-field-scale: calc(1 * var(--jj-game-scale));
 }
 
 .game__field {
-    --jj-game-field-shared-transforms: scale(var(--jj-game-field-scale));
+    --jj-game-field-shared-transforms: scale(var(--jj-game-field-calc-scale));
     display: grid;
     background-color: transparent;
     width: 30.5rem;
@@ -414,7 +434,7 @@ body {
     left: var(--jj-plant-picker-x);
     display: flex;
     z-index: 1000;
-    transform: scale(var(--jj-game-field-scale));
+    transform: scale(var(--jj-game-field-calc-scale));
 }
 
 .plant-picker__container--hidden {
@@ -906,7 +926,7 @@ body {
 
     z-index: 1000;
 
-    transform: scale(var(--jj-game-field-scale));
+    transform: scale(var(--jj-game-field-calc-scale));
 
     background-image: url("/rectangleButton.svg");
     background-size: contain;
@@ -924,4 +944,10 @@ body {
     width: 1.5rem;
     height: 1.5rem;
 
+}
+
+#app-version {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }

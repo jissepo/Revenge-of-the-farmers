@@ -8,7 +8,7 @@ import {
 
 export const generateGameGrid = (width: number = GRID_MAX_WIDTH, height: number = GRID_MAX_HEIGHT): GameGrid => {
   const grid: GameGrid = {
-    unlockableCellsCount: 0,
+    unlockableCellsCount: 1000,
     cells: {},
   };
 
