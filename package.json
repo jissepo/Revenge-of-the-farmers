@@ -1,7 +1,7 @@
 {
   "name": "revenge-of-the-farmer",
   "private": true,
-  "version": "0.41.0",
+  "version": "0.42.0",
   "type": "module",
   "scripts": {
     "dev:gui": "vite",
