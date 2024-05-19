@@ -35,20 +35,24 @@ import {
 } from './client/gameRenderer';
 import { getCurrentGameState, setGameState, updateGridCell } from './client/gameState';
 import { initializeHud } from './client/hudHandler';
-import { registerSW } from 'virtual:pwa-register'
+import { registerSW } from 'virtual:pwa-register';
 
 
-const intervalMS = 60 * 60 * 1000
+const intervalMS = 60 * 60 * 1000;
 
-registerSW({
+const updateSw = registerSW({
   immediate: true,
-  onRegisteredSW(swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) {
+  onRegisteredSW: (swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) => {
     registration && setInterval(async () => {
-      if (!(!registration.installing && navigator))
-        return
+      if ( !( !registration.installing && navigator ) ) {
+        console.log('no SW installed');
+        return;
+      }
 
-      if (('connection' in navigator) && !navigator.onLine)
-        return
+      if ( ( 'connection' in navigator ) && !navigator.onLine ) {
+        console.log('no connection');
+        return;
+      }
 
       const resp = await fetch(swScriptUrl, {
         cache: 'no-store',
@@ -56,16 +60,16 @@ registerSW({
           'cache': 'no-store',
           'cache-control': 'no-cache',
         },
-      })
+      });
 
-      if (resp?.status === 200){
-        console.log("new SW version available");
-        await registration.update()
-        window.location.reload();
+      if ( resp?.status === 200 ) {
+        console.log('new SW version available');
+        await registration.update();
+        await updateSw();
       }
-    }, intervalMS)
-  }
-})
+    }, intervalMS);
+  },
+});
 
 initializeSharedWorker();
 addWorkerMessageListener((event) => {
