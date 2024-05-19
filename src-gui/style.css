@@ -180,12 +180,18 @@ body {
     background-image: url("/backgrounds/cardboardBg.svg");
     background-size: contain;
     background-repeat: no-repeat;
-    padding: 1rem;
+    padding: 0.7rem;
     font-weight: 600;
+    width: 8rem;
 }
 
 .hud__right-container > *:is(.shop:not(.shop--hidden) + .hud *), .hud__left-container > *:is(.shop:not(.shop--hidden) + .hud *) {
     display: none;
+}
+
+#cardboardTracker {
+    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 
@@ -204,10 +210,14 @@ body {
     isolation: isolate;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-
+    justify-content: center;
     gap: 1rem;
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+    }
 }
 
 .app--hud-battle .game {
@@ -434,7 +444,7 @@ body {
     left: var(--jj-plant-picker-x);
     display: flex;
     z-index: 1000;
-    transform: scale(var(--jj-game-field-calc-scale));
+    transform: scale(calc(clamp(1, var(--jj-game-field-calc-scale), 1.5) * 1.5));
 }
 
 .plant-picker__container--hidden {
@@ -715,10 +725,16 @@ body {
 
 .hud__top-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 1rem;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .participant__container {
@@ -753,6 +769,7 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    transform: scale(0.8);
 }
 
 .participant__health {
@@ -761,7 +778,7 @@ body {
     appearance: none;
     /* the progress color */
     --color: green;
-    background-blend-mode: screen;
+
     /* the background color */
     --background: transparent;
     --border-radius: 0.2rem;
@@ -878,9 +895,13 @@ body {
 .battle-ended__text {
     display: none;
     text-align: center;
-    font-size: 3rem;
     font-weight: 600;
     color: white;
+    font-size: 2rem;
+
+    @media screen and (min-width: 800px) {
+        font-size: 3rem;
+    }
 }
 
 .battle-ended__container--won .battle-ended__text--won {

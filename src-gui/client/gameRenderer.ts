@@ -120,7 +120,7 @@ const getCellElementFromCell = (cell: GameGridCell, isSelf: boolean): HTMLDivEle
   return cellElement;
 };
 
-const cellIntervals: Record<number, NodeJS.Timeout> = {};
+const cellIntervals: Record<number, number> = {};
 const renderTimer = (plantedCell: PlantedGameGridCell, cellIndex: number, cellTimerElement: HTMLSpanElement) => {
   const timePassed = new Date().getTime() - plantedCell.plant.plantedAt;
   const timeRemaining = plantedCell.plant.plant.stats.growthTime - Math.floor(timePassed / 1000);
@@ -205,7 +205,7 @@ export const renderPlantPicker = (availablePlants: AvailablePlant[]): void => {
       if ( !pickerContainerElement.dataset.currentCellIndex || Number.isNaN(Number(pickerContainerElement.dataset.currentCellIndex)) ) {
         throw new Error('No cell index on plant picker');
       }
-      handlePlantPlant(evt, Number(pickerContainerElement.dataset.currentCellIndex), selectedPlant.name);
+      handlePlantPlant(evt, Number(pickerContainerElement.dataset.currentCellIndex), selectedPlant.id);
       pickerContainerElement.classList.add('plant-picker__container--hidden');
     });
 
@@ -351,7 +351,7 @@ export const renderScaleField = (): void => {
   if ( newHud === HudState.GAME ) {
     gameElement.style.setProperty('--jj-game-field-scale', scale.toString());
   } else {
-    gameElement.style.setProperty('--jj-game-field-scale', (scale / 3).toString());
+    gameElement.style.setProperty('--jj-game-field-scale', (availableWidth > 800 ? scale / 3 : scale).toString());
   }
 }
 

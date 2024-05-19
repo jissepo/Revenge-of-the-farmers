@@ -17,9 +17,16 @@ export const getDbConnection = async (): Promise<IDBDatabase> => {
     // Basically this is your migration runner
     request.onupgradeneeded = () => {
       const db = request.result;
-      db.createObjectStore(
-        GAME_STATE_OBJECT_STORE_KEY,
-      );
+      if ( !db.objectStoreNames.contains(GAME_STATE_OBJECT_STORE_KEY) ) {
+        db.createObjectStore(
+          GAME_STATE_OBJECT_STORE_KEY,
+        );
+      } else {
+        db.deleteObjectStore(GAME_STATE_OBJECT_STORE_KEY);
+        db.createObjectStore(
+          GAME_STATE_OBJECT_STORE_KEY,
+        );
+      }
     };
 
     request.onsuccess = () => {

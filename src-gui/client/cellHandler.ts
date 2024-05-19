@@ -98,9 +98,10 @@ const handleUnlockCellClick = (cell: GameGridCell) => {
 };
 
 
-export const handlePlantPlant = (evt: MouseEvent, cellIndex: number, selectedPlantName: Plant['name']): void => {
+export const handlePlantPlant = (evt: MouseEvent, cellIndex: number, selectedPlantId: Plant['id']): void => {
   evt.preventDefault();
   const state = getCurrentGameState();
+
   if ( !isStartedGameState(state) ) {
     throw new Error('Game is not in active state. How did you even?');
   }
@@ -108,7 +109,7 @@ export const handlePlantPlant = (evt: MouseEvent, cellIndex: number, selectedPla
   if ( !cell ) {
     throw new Error('Cell not found');
   }
-  const selectedPlant = state.player.availablePlants.find(plant => plant.name === selectedPlantName);
+  const selectedPlant = state.player.availablePlants.find(plant => plant.id === selectedPlantId);
   if ( !selectedPlant ) {
     throw new Error('Plant not found');
   }

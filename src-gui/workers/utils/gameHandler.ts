@@ -137,7 +137,7 @@ const startGame = async (): Promise<GameStartedMessage> => {
   };
   for ( let i = 0; i < 3; i++ ) {
     const randomPlant = data.plants[Math.floor(Math.random() * data.plants.length)];
-    const index = gameStartedState.player.availablePlants.findIndex((plant) => plant.name === randomPlant.name);
+    const index = gameStartedState.player.availablePlants.findIndex((plant) => plant.id === randomPlant.id);
     if ( index !== -1 ) {
       gameStartedState.player.availablePlants[index].quantity += 1;
     } else {
@@ -196,7 +196,7 @@ const plantPlant = async (messageValue: PlantPlantMessage['value']): Promise<Pla
   };
   gameState.grid.cells[cellIndex] = plantedCell;
 
-  const plantIndex = gameState.player.availablePlants.findIndex((plant) => plant.name === messageValue.plant.name);
+  const plantIndex = gameState.player.availablePlants.findIndex((plant) => plant.id === messageValue.plant.id);
   if ( plantIndex === -1 ) {
     throw new Error('Plant not found');
   }
@@ -225,7 +225,7 @@ const buyPlant = async (messageValue: BuyPlantMessage['value']): Promise<PlantBo
   if ( !isStartedGameState(gameState) ) {
     throw new Error('Game is not started');
   }
-  const boughtPlant = data.plants.find(plant => plant.name === messageValue.plant.name);
+  const boughtPlant = data.plants.find(plant => plant.id === messageValue.plant.id);
   if ( !boughtPlant ) {
     throw new Error('Plant not found');
   }
@@ -234,7 +234,7 @@ const buyPlant = async (messageValue: BuyPlantMessage['value']): Promise<PlantBo
     throw new Error('Not enough cardboard');
   }
 
-  const existingPlantIndex = gameState.player.availablePlants.findIndex((plant) => plant.name === boughtPlant.name);
+  const existingPlantIndex = gameState.player.availablePlants.findIndex((plant) => plant.id === boughtPlant.id);
   if ( existingPlantIndex !== -1 ) {
     gameState.player.availablePlants[existingPlantIndex].quantity++;
   } else {
@@ -243,6 +243,7 @@ const buyPlant = async (messageValue: BuyPlantMessage['value']): Promise<PlantBo
       quantity: 1,
     });
   }
+
   gameState.player.cardboard -= boughtPlant.stats.cost;
 
   await updateGameState(gameState);

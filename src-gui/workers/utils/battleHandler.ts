@@ -6,6 +6,7 @@ import { sendMessageToAllConnectedPorts } from './helpers/messenger';
 import { GameOutcome, ReceivedWorkerActions } from '../../types/enums';
 import { BattleEndedMessage, DamageDealtMessage } from '../../types/client/worker';
 import { calculateGridCellIndexForCell } from '../../shared/grid';
+import data from '../../data';
 
 let opponent: StartedGameState | null = null;
 let localSelf: StartedGameState | null = null;
@@ -87,11 +88,14 @@ const clearAllIntervals = () => {
 };
 
 const handleDealDamage = async (cell: PlantedGameGridCell, isSelf: boolean, otherPlayer: StartedGameState) => {
-
   if ( !isFighting ) {
     return;
   }
-  const damage = cell.plant.plant.stats.attack;
+  const localDataPlant = data.plants.find((plant) => plant.id === cell.plant.plant.id);
+  if ( !localDataPlant ) {
+    throw new Error('Trying to attack with unknown plant');
+  }
+  const damage = localDataPlant.stats.attack;
   otherPlayer.player.health -= damage;
   console.debug(`Dealt ${ damage } damage to ${ otherPlayer.player.health }`);
 

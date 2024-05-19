@@ -4,6 +4,7 @@ import { PlantAttributes, PlantType } from './types/enums';
 const data: GameData = {
   plants: [
     {
+      id: 1,
       name: 'Beetroot',
       description: 'The beet is a plant whose root, leaves, and stems are all edible. It is a member of the Amaranthaceae family.',
       icon: 'plant-icons/beetroot.png',
@@ -22,6 +23,7 @@ const data: GameData = {
       ],
     },
     {
+      id: 2,
       name: 'Carrot',
       description: 'The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist.',
       icon: 'plant-icons/carrot.png',
@@ -40,6 +42,7 @@ const data: GameData = {
       ],
     },
     {
+      id: 3,
       name: 'Cotton',
       description: 'Cotton is a soft, fluffy staple fiber that grows in a boll, or protective case, around the seeds of the cotton plants of the genus Gossypium in the mallow family Malvaceae.',
       icon: 'plant-icons/cotton.png',
@@ -58,6 +61,7 @@ const data: GameData = {
       ],
     },
     {
+      id: 4,
       name: 'Tomato',
       description: 'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as a tomato plant.',
       icon: 'plant-icons/tomato.png',
