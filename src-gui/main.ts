@@ -61,6 +61,7 @@ registerSW({
       if (resp?.status === 200){
         console.log("new SW version available");
         await registration.update()
+        window.location.reload();
       }
     }, intervalMS)
   }
