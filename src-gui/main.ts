@@ -35,6 +35,34 @@ import {
 } from './client/gameRenderer';
 import { getCurrentGameState, setGameState, updateGridCell } from './client/gameState';
 import { initializeHud } from './client/hudHandler';
+import { registerSW } from 'virtual:pwa-register'
+
+
+const intervalMS = 60 * 60 * 1000
+
+registerSW({
+  immediate: true,
+  onRegisteredSW(swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) {
+    registration && setInterval(async () => {
+      if (!(!registration.installing && navigator))
+        return
+
+      if (('connection' in navigator) && !navigator.onLine)
+        return
+
+      const resp = await fetch(swScriptUrl, {
+        cache: 'no-store',
+        headers: {
+          'cache': 'no-store',
+          'cache-control': 'no-cache',
+        },
+      })
+
+      if (resp?.status === 200)
+        await registration.update()
+    }, intervalMS)
+  }
+})
 
 initializeSharedWorker();
 addWorkerMessageListener((event) => {

@@ -29,7 +29,6 @@ jobs:
       - name: Push version bump
         run: git push
   build-and-push-image:
-
     runs-on: ubuntu-latest
     needs:
       - on_push_update_version_nr

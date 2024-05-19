@@ -4,6 +4,7 @@
     "./src-gui/types/**/*.ts",
     "./src-gui/shared/*.ts",
     "./src-gui/worker/*.ts",
+    "./src-gui/workers/config/game.ts",
     "./src-gui/workers/utils/*.ts",
     "./src-gui/workers/utils/helpers/*.ts"
   ],
