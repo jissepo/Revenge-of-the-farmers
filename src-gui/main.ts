@@ -43,15 +43,16 @@ const intervalMS = 60 * 1000;
 const updateSw = registerSW({
   immediate: true,
   onRegisteredSW: (swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) => {
-    console.log("Registered SW", registration);
+    console.debug("Registered SW", registration);
     registration && setInterval(async () => {
+      console.debug("Sw checking for updates");
       if ( !( !registration.installing && navigator ) ) {
-        console.log('no SW installed');
+        console.debug('no SW installed');
         return;
       }
 
       if ( ( 'connection' in navigator ) && !navigator.onLine ) {
-        console.log('no connection');
+        console.debug('no connection');
         return;
       }
 
@@ -64,7 +65,7 @@ const updateSw = registerSW({
       });
 
       if ( resp?.status === 200 ) {
-        console.log('new SW version available');
+        console.debug('new SW version available');
         await registration.update();
         await updateSw();
       }
