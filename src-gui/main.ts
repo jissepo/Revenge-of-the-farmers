@@ -38,7 +38,7 @@ import { initializeHud } from './client/hudHandler';
 import { registerSW } from 'virtual:pwa-register';
 
 
-const intervalMS = 60 * 60 * 1000;
+const intervalMS = 60 * 1000;
 
 const updateSw = registerSW({
   immediate: true,
