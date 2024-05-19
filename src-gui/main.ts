@@ -43,6 +43,7 @@ const intervalMS = 60 * 60 * 1000;
 const updateSw = registerSW({
   immediate: true,
   onRegisteredSW: (swScriptUrl: string, registration: ServiceWorkerRegistration | undefined) => {
+    console.log("Registered SW", registration);
     registration && setInterval(async () => {
       if ( !( !registration.installing && navigator ) ) {
         console.log('no SW installed');
