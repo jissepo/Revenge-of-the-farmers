@@ -144,6 +144,7 @@ addWorkerMessageListener((event) => {
     renderBattleEnded(event.data.value.outcome, event.data.value.cellsUnlocked);
     renderBattleStats(true, event.data.value.gameState);
     renderHidePlantSalesElement();
+    renderCardboard(event.data.value.gameState.player.cardboard);
   } else if ( isCellUnlockedMessageEvent(event) ) {
     console.debug('Battle ended');
     setGameState(event.data.value.gameState);
