@@ -86,7 +86,6 @@ addWorkerMessageListener((event) => {
   if ( isGameStartedMessageEvent(event) ) {
     console.debug('Game started');
     setGameState(event.data.value);
-    renderSwitchHud(HudState.GAME);
     requestAnimationFrame(() => {
       renderField(event.data.value.grid, true);
       renderBuyableCells(event.data.value);
@@ -96,6 +95,7 @@ addWorkerMessageListener((event) => {
         renderShopShelve();
         renderShopInventory(event.data.value.player.availablePlants);
       }
+      renderSwitchHud(HudState.GAME);
     });
   } else if ( isContinuableGameMessageEvent(event) ) {
     console.debug('Game started');
@@ -159,7 +159,6 @@ addWorkerMessageListener((event) => {
     }
   }
 });
-
 
 initializeHud();
 renderSwitchHud(HudState.MENU);

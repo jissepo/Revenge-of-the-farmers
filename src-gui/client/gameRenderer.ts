@@ -335,7 +335,9 @@ export const renderSwitchHud = (newHud: HudState): void => {
     }
   });
   appElement.classList.add(`app--hud-${ newHud }`);
-  renderScaleField();
+  if ( newHud !== HudState.MENU ) {
+    renderScaleField();
+  }
 };
 
 export const renderScaleField = (): void => {

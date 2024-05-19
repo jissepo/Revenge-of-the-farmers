@@ -481,7 +481,7 @@ body {
     left: var(--jj-plant-picker-x);
     display: flex;
     z-index: 1000;
-    transform: scale(calc(clamp(1, var(--jj-game-field-calc-scale), 1.5) * 1.5));
+    transform: scale(calc(clamp(1, var(--jj-game-field-calc-scale), 1.5)));
 }
 
 .plant-picker__container--hidden {
@@ -984,7 +984,7 @@ body {
 
     z-index: 1000;
 
-    transform: scale(var(--jj-game-field-calc-scale));
+    transform: scale(calc(clamp(1, var(--jj-game-field-calc-scale), 1.5)));
 
     background-image: url("/rectangleButton.svg");
     background-size: contain;
