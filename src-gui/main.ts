@@ -1,5 +1,9 @@
 import './style.css';
-import { addWorkerMessageListener, initializeSharedWorker } from './client/sharedWorker';
+import {
+  addWorkerMessageListener,
+  initializeSharedWorker,
+  sendMessageToWorker,
+} from './client/sharedWorker';
 import {
   isBattleEndedMessageEvent,
   isBattleReadyMessageEvent,
@@ -14,7 +18,7 @@ import {
   isPlantStateChangeMessageEvent,
   isStartedGameState,
 } from './shared/predicates';
-import { HudState } from './types/enums';
+import { HudState, SendableWorkerActions } from './types/enums';
 import {
   renderBattle,
   renderBattleEnded,
@@ -36,6 +40,7 @@ import {
 import { getCurrentGameState, setGameState, updateGridCell } from './client/gameState';
 import { initializeHud } from './client/hudHandler';
 import { registerSW } from 'virtual:pwa-register';
+import { FindOpponentMessage } from './types/worker/worker';
 
 
 const intervalMS = 60 * 1000;
@@ -129,11 +134,11 @@ addWorkerMessageListener((event) => {
     renderBattleReady(event.data.value);
   } else if ( isOpponentFoundMessageEvent(event) ) {
     console.debug('Opponent found');
-    renderSwitchHud(HudState.BATTLE);
 
     renderBattle(event.data.value.self, true);
     renderBattle(event.data.value.opponent, false);
 
+    renderSwitchHud(HudState.BATTLE);
     renderCountdown();
   } else if ( isDamageDealtMessageEvent(event) ) {
     console.debug('Damage dealt');
@@ -159,6 +164,10 @@ addWorkerMessageListener((event) => {
 initializeHud();
 renderSwitchHud(HudState.MENU);
 
+// const startBattleMessage: FindOpponentMessage = {
+//   action: SendableWorkerActions.FIND_OPPONENT,
+// };
+// sendMessageToWorker(startBattleMessage);
 // try {
 //   screen.orientation.lock('landscape-primary');
 // } catch ( e ) {

@@ -5,7 +5,8 @@ import {
   getBattleEndedContainerElement,
   getBattleEndedSlotsElement,
   getCardboardTracker,
-  getCountdownContainerElement, getGameElement,
+  getCountdownContainerElement,
+  getGameElement,
   getGameField,
   getGameFieldCellTemplate,
   getPlantIconTemplate,
@@ -24,7 +25,8 @@ import {
   getShopShelveItemElement,
   getSplashContinueElement,
   getSplashElement,
-  getStartBattleElement, getVersionElement,
+  getStartBattleElement,
+  getVersionElement,
 } from './elements';
 import { handleCellClick, handlePlantPlant } from './cellHandler';
 import { GameOutcome, HudState, PlantGrowthState, SendableWorkerActions } from '../types/enums';
@@ -40,12 +42,15 @@ import { StartBattleMessage } from '../types/worker/worker';
 import { DamageDealtMessage } from '../types/client/worker';
 import { getCurrentGameState, getCurrentHudState, setHudState } from './gameState';
 
-import {version} from '../../package.json';
+import { version } from '../../package.json';
 
 const clearField = (isSelf: boolean): void => {
   // Clear the game field
   console.debug('Clearing game field');
   const gameField = getGameField(isSelf);
+  // while ( gameField.firstElementChild!.firstChild ) {
+  //   gameField.removeChild(gameField.firstElementChild!.firstChild);
+  // }
   while ( gameField.firstChild ) {
     gameField.removeChild(gameField.firstChild);
   }
@@ -84,6 +89,7 @@ export const renderField = (gameGrid: GameGrid, isSelf: boolean): void => {
       cellButtonElement.addEventListener('click', (evt) => handleCellClick(evt));
     }
 
+    // gameField.firstElementChild!.appendChild(cellElement);
     gameField.appendChild(cellElement);
     if ( cell.hasPlant ) {
       renderPlantedGameGridCell(cell, isSelf);
@@ -329,7 +335,7 @@ export const renderSwitchHud = (newHud: HudState): void => {
     }
   });
   appElement.classList.add(`app--hud-${ newHud }`);
-  renderScaleField()
+  renderScaleField();
 };
 
 export const renderScaleField = (): void => {
@@ -338,22 +344,37 @@ export const renderScaleField = (): void => {
 
   const gameField = getGameField(true);
   const fieldWidth = gameField.offsetWidth;
+  const fieldHeight = gameField.offsetHeight;
 
-  const windowWidth = window.innerWidth;
+  const gameWidth = gameElement.offsetWidth;
+  const gameHeight = gameElement.offsetHeight;
+  const divisor = ( newHud === HudState.BATTLE ? 2 : 1 );
+  const aspectRatio = gameWidth / ( gameHeight / divisor );
+
   const padding = 32 * 2; // 32px on both sides
 
   // Calculate the available width for the field
-  const availableWidth = windowWidth - padding;
+  const availableWidth = gameWidth - padding;
+  const availableHeight =  ( gameHeight / divisor ) - padding / divisor;
 
   // Calculate the scale
-  const scale = availableWidth / fieldWidth;
+  let scale = 1;
+  if ( aspectRatio > 1 ) {
+    scale =availableHeight / fieldHeight;
+  } else {
+    scale = availableWidth / fieldWidth;
+  }
 
   if ( newHud === HudState.GAME ) {
     gameElement.style.setProperty('--jj-game-field-scale', scale.toString());
   } else {
-    gameElement.style.setProperty('--jj-game-field-scale', (availableWidth > 800 ? scale / 3 : scale).toString());
+    gameElement.style.setProperty('--jj-game-field-scale', scale.toString());
   }
-}
+  // gameField.style.top = `${gameField.getBoundingClientRect().top - gameElement.getBoundingClientRect().top}px`
+  // gameField.style.left = `${gameField.getBoundingClientRect().left - gameElement.getBoundingClientRect().left}px`
+
+
+};
 
 export const renderEnableContinueGameButton = (): void => {
   console.debug(`Enabling continue game button`);
@@ -492,4 +513,4 @@ export const renderVersion = () => {
   if ( versionElement ) {
     versionElement.textContent = version || '0.0.0';
   }
-}
+};

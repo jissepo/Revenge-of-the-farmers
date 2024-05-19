@@ -6,7 +6,7 @@ import { PlantPlantMessage, UnlockCellMessage } from '../types/worker/worker';
 import { SendableWorkerActions } from '../types/enums';
 import { getCurrentGameState } from './gameState';
 import { isStartedGameState, targetIsHTMLElement } from '../shared/predicates';
-import { getPlantPickerElement, getPlantSalesElement } from './elements';
+import { getGameElement, getPlantPickerElement, getPlantSalesElement } from './elements';
 
 export const handleCellClick = (event: MouseEvent) => {
   event.preventDefault();
@@ -58,12 +58,14 @@ const handlePlantedCellClick = (cell: PlantedGameGridCell, cellElement: HTMLDivE
   console.debug('Handling planted cell click', cell);
 
   const plantSalesElement = getPlantSalesElement();
+  const gameElement = getGameElement();
 
   const cellBounds = cellElement.getBoundingClientRect();
+  const gameBounds = gameElement.getBoundingClientRect();
 
   plantSalesElement.classList.remove('plant-sales__container--hidden');
-  plantSalesElement.style.setProperty('--jj-sales-x', `${ cellBounds.left + cellBounds.width / 2 }px`);
-  plantSalesElement.style.setProperty('--jj-sales-y', `${ cellBounds.top - cellBounds.height }px`);
+  plantSalesElement.style.setProperty('--jj-sales-x', `${ cellBounds.left + cellBounds.width / 2 - gameBounds.left }px`);
+  plantSalesElement.style.setProperty('--jj-sales-y', `${ cellBounds.top - gameBounds.top }px`);
   plantSalesElement.dataset.cellIndex = cellElement.dataset.cellIndex;
 
   const plantSalesPriceElement = plantSalesElement.querySelector<HTMLSpanElement>('[data-plant-sales-price]')!;
@@ -76,13 +78,16 @@ const handleUnPlantedCellClick = (cell: GameGridCell, player: GamePlayer, cellEl
   console.debug('Handling un-planted cell click', cell, player);
 
   const plantPickerContainerElement = getPlantPickerElement();
+  const gameElement = getGameElement();
 
+
+  const gameBounds = gameElement.getBoundingClientRect();
   const cellBounds = cellElement.getBoundingClientRect();
 
 
   plantPickerContainerElement.classList.remove('plant-picker__container--hidden');
-  plantPickerContainerElement.style.setProperty('--jj-plant-picker-x', `${ cellBounds.left + cellBounds.width / 2 }px`);
-  plantPickerContainerElement.style.setProperty('--jj-plant-picker-y', `${ cellBounds.top - cellBounds.height }px`);
+  plantPickerContainerElement.style.setProperty('--jj-plant-picker-x', `${ cellBounds.left + cellBounds.width / 2   - gameBounds.left}px`);
+  plantPickerContainerElement.style.setProperty('--jj-plant-picker-y', `${ cellBounds.top  - gameBounds.top }px`);
   plantPickerContainerElement.dataset.currentCellIndex = cellElement.dataset.cellIndex;
 };
 
